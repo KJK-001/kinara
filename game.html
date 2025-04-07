@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiplayer Game</title>
+    <style>
+        /* Basic CSS Styling */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        .team-section, .game-section {
+            margin: 20px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 200px;
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .chat-section {
+            margin-top: 20px;
+        }
+
+        .chat-section input {
+            width: 300px;
+        }
+
+        .chat-section button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Multiplayer Game</h1>
+
+    <div class="team-section">
+        <h2>Create or Join Team</h2>
+        <input type="text" id="teamName" placeholder="Enter team name">
+        <button onclick="createTeam()">Create Team</button>
+        <h3>Your Teams:</h3>
+        <ul id="userTeams"></ul>
+    </div>
+
+    <div class="game-section">
+        <button onclick="joinGame()">Join Game</button>
+        <div id="waitingMessage"></div>
+        <div id="chatSection">
+            <h2>Chat</h2>
+            <ul id="chatMessages"></ul>
+            <input type="text" id="chatMessage" placeholder="Type a message">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        let user;
+
+        // Sign in anonymously if not signed in
+        firebase.auth().onAuthStateChanged((currentUser) => {
+            if (currentUser) {
+                user = currentUser;
+                console.log("User authenticated:", user.uid);
+                fetchUserTeams();
+            } else {
+                firebase.auth().signInAnonymously();
+            }
+        });
+
+        // Fetch User Teams
+        async function fetchUserTeams() {
+            if (!user) return;
+            const teamsRef = db.collection("Teams");
+            const querySnapshot = await teamsRef.where("members", "array-contains", user.uid).get();
+            const teams = querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            displayUserTeams(teams);
+        }
+
+        // Display User Teams in the UI
+        function displayUserTeams(teams) {
+            const userTeamsList = document.getElementById("userTeams");
+            userTeamsList.innerHTML = "";
+            teams.forEach((team) => {
+                const li = document.createElement("li");
+                li.innerHTML = `${team.name} <button onclick="joinTeam('${team.id}')">Join Team</button>`;
+                userTeamsList.appendChild(li);
+            });
+        }
+
+        // Create a Team
+        async function createTeam() {
+            const teamName = document.getElementById("teamName").value;
+            if (!teamName) return;
+            await db.collection("Teams").add({
+                name: teamName,
+                members: [user.uid],
+                wins: 0,
+                losses: 0,
+            });
+            fetchUserTeams();
+            document.getElementById("teamName").value = "";
+        }
+
+        // Join an Existing Team
+        async function joinTeam(teamId) {
+            const teamRef = db.collection("Teams").doc(teamId);
+            await teamRef.update({
+                members: firebase.firestore.FieldValue.arrayUnion(user.uid),
+            });
+            fetchUserTeams();
+        }
+
+        // Join a Game Room
+        async function joinGame() {
+            const gamesRef = db.collection("Games");
+            const querySnapshot = await gamesRef
+                .where("status", "==", "waiting")
+                .where("player", "!=" , user.uid)
+                .limit(1)
+                .get();
+
+            if (!querySnapshot.empty) {
+                const opponentDoc = querySnapshot.docs[0];
+                const gameRoomRef = db.collection("Games").doc(opponentDoc.id);
+                await gameRoomRef.update({
+                    opponent: user.uid,
+                    status: "playing",
+                });
+                setGameRoomId(opponentDoc.id);
+            } else {
+                const newGameRef = await db.collection("Games").add({
+                    player: user.uid,
+                    opponent: null,
+                    status: "waiting",
+                    chat: [],
+                });
+                setGameRoomId(newGameRef.id);
+            }
+        }
+
+        // Set Game Room ID
+        function setGameRoomId(roomId) {
+            document.getElementById("waitingMessage").innerHTML = "Waiting for opponent...";
+            setInterval(async () => {
+                const gameRoomRef = db.collection("Games").doc(roomId);
+                const gameDoc = await gameRoomRef.get();
+                const gameData = gameDoc.data();
+                if (gameData && gameData.opponent) {
+                    clearInterval();
+                    document.getElementById("waitingMessage").innerHTML = `You are playing against ${gameData.opponent}`;
+                    fetchChatMessages(roomId);
+                }
+            }, 1000);
+        }
+
+        // Fetch Chat Messages
+        async function fetchChatMessages(roomId) {
+            const gameRoomRef = db.collection("Games").doc(roomId);
+            gameRoomRef.onSnapshot((doc) => {
+                const chatMessages = doc.data().chat;
+                displayChatMessages(chatMessages);
+            });
+        }
+
+        // Display Chat Messages
+        function displayChatMessages(messages) {
+            const chatMessagesList = document.getElementById("chatMessages");
+            chatMessagesList.innerHTML = "";
+            messages.forEach((message) => {
+                const li = document.createElement("li");
+                li.innerHTML = `<strong>${message.sender}</strong>: ${message.message}`;
+                chatMessagesList.appendChild(li);
+            });
+        }
+
+        // Send Message to Chat
+        async function sendMessage() {
+            const message = document.getElementById("chatMessage").value;
+            if (!message.trim()) return;
+
+            const gameRoomRef = db.collection("Games").doc(gameRoomId);
+            await gameRoomRef.update({
+                chat: firebase.firestore.FieldValue.arrayUnion({
+                    sender: user.uid,
+                    message: message,
+                    timestamp: new Date(),
+                }),
+            });
+
+            document.getElementById("chatMessage").value = "";
+        }
+    </script>
+</body>
+</html>
