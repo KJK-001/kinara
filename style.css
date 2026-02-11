@@ -1,0 +1,550 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0; padding: 0;
+  line-height: 1.6;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #004466; color: #fff; padding: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+.nav-links { list-style: none; display: flex; transition: max-height 0.3s ease-in-out; }
+.nav-links li { margin: 0 1rem; }
+.nav-links a { color: #fff; text-decoration: none; font-weight: 500; }
+.menu-icon { display: none; font-size: 1.8rem; cursor: pointer; }
+
+/* Hero */
+.hero {
+  text-align: center; padding: 3rem;
+  background: linear-gradient(to right, #006699, #00cc99);
+  color: #fff;
+}
+.hero h2 { font-family: 'Poppins', sans-serif; font-size: 2rem; }
+.btn {
+  background: #ff6600; color: #fff;
+  padding: 0.7rem 1.2rem; border: none;
+  text-decoration: none; border-radius: 5px;
+  font-weight: 600; font-family: 'Poppins', sans-serif;
+}
+
+/* Welcome Section Styling */
+.welcome {
+  padding: 40px;
+  text-align: center;
+  overflow: hidden;   /* hides text when off-screen */
+  position: relative;
+}
+
+/* Sliding Welcome Text */
+.welcome-text {
+  font-size: 3rem;                 /* larger for visibility */
+  font-weight: bold;
+  color: #ff6600;                  /* brand orange */
+  display: inline-block;
+  white-space: nowrap;
+
+  /* Continuous sliding animation */
+  animation: slideAcross 12s linear infinite;
+
+  /* Cleaner glow effect (less heavy shadow) */
+  text-shadow: 0 0 12px rgba(255, 102, 0, 0.9),
+              
+}
+
+/* Keyframes for continuous sliding */
+@keyframes slideAcross {
+  0% {
+    transform: translateX(100%);   /* start off-screen right */
+  }
+  100% {
+    transform: translateX(-100%);  /* move off-screen left */
+  }
+}
+
+
+
+/* Services */
+.services h2 { text-align: center; font-family: 'Poppins', sans-serif; color: #004466; }
+.services .service-cards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem; padding: 2rem;
+}
+.card {
+  background: #f4f4f4; padding: 1.5rem;
+  border-radius: 8px; text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.card h3 { font-family: 'Poppins', sans-serif; color: #006699; }
+
+/* Application Form */
+.apply h2 { text-align: center; font-family: 'Poppins', sans-serif; color: #004466; }
+.apply form {
+  display: flex; flex-direction: column;
+  max-width: 500px; margin: auto; padding: 2rem;
+}
+.apply input, .apply select, .apply textarea {
+  margin: 0.5rem 0; padding: 0.8rem;
+  border: 1px solid #ccc; border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+}
+.apply button {
+  background: #ff6600; color: #fff;
+  padding: 0.7rem; border: none;
+  border-radius: 5px; font-weight: 600;
+  cursor: pointer; font-family: 'Poppins', sans-serif;
+}
+.apply button:hover { background: #e65c00; }
+
+/* Contact */
+footer {
+  background: #004466; color: #fff;
+  text-align: center; padding: 1rem;
+}
+footer a { color: #ffcc00; text-decoration: none; font-weight: 500; }
+footer i { margin-right: 8px; color: #ffcc00; }
+
+/* Mobile Dropdown */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    max-height: 0; overflow: hidden;
+    background: #004466; width: 100%;
+  }
+  .nav-links.show { max-height: 300px; }
+  .menu-icon { display: block; }
+}
+/* Smooth dropdown animation */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    background: #004466;
+    width: 100%;
+    transition: max-height 0.5s ease; /* smooth slide */
+  }
+  .nav-links.show {
+    max-height: 300px; /* expands smoothly */
+  }
+  .menu-icon {
+    display: block;
+  }
+}
+
+/* Welcome animation */
+.welcome h2, .welcome p {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeSlideIn 1.5s forwards;
+}
+
+.welcome h2 {
+  animation-delay: 0.3s; /* heading first */
+}
+
+.welcome p {
+  animation-delay: 0.8s; /* message after heading */
+}
+
+@keyframes fadeSlideIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Service cards animation */
+.card {
+  background: #f4f4f4;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+  /* animation setup */
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* When visible on scroll */
+.card.show {
+  opacity: 1;
+  transform: scale(1);
+}
+/* About Section Styling */
+.about {
+  background-color: #fdfdfd;   /* light neutral background */
+  color: #222;                 /* strong dark text for contrast */
+  padding: 50px;
+  line-height: 1.8;            /* improve readability */
+  font-size: 1.1rem;           /* slightly larger text */
+  text-align: justify;         /* neat alignment */
+}
+
+.about h2 {
+  color: #ff6600;              /* match your Apply button color for headings */
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.about p {
+  margin-bottom: 15px;
+}
+
+/* FAQ Section Styling */
+.faqs {
+  background-color: #ff6600;   /* match Apply button color */
+  color: #fff;
+  padding: 30px;               /* reduced padding to match Knowledge Hub */
+  border-radius: 8px;
+}
+
+.faqs h2 {
+  text-align: center;          /* center the title */
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #fff;                 /* keep title white for contrast */
+}
+
+.faq-item {
+  margin-bottom: 15px;
+}
+
+.faq-question {
+  background-color: #fff;      /* white button for contrast */
+  color: #333;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.faq-answer {
+  display: none;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.9); /* light background for readability */
+  color: #333;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+
+/* Knowledge Hub Section */
+.knowledge {
+  padding: 3rem 1rem;
+  background: #eef6f9;
+  text-align: center;
+}
+.knowledge h2 {
+  font-family: 'Poppins', sans-serif;
+  color: #004466;
+  margin-bottom: 1rem;
+}
+.knowledge p {
+  margin-bottom: 2rem;
+  color: #333;
+}
+.guide-item {
+  max-width: 800px;
+  margin: 0 auto 1rem auto;
+  text-align: left;
+}
+.guide-question {
+  width: 100%;
+  padding: 1rem;
+  background: #004466;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 5px;
+}
+.guide-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+  background: #fff;
+  padding: 0 1rem;
+  border-radius: 0 0 5px 5px;
+}
+.guide-answer ol {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+}
+.guide-item.active .guide-answer {
+  max-height: 400px;
+  padding: 1rem;
+}
+/* Knowledge Hub Search */
+#knowledgeSearch {
+  width: 80%;
+  max-width: 600px;
+  padding: 0.8rem;
+  margin: 1rem auto 2rem auto;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+/* Floating WhatsApp Button */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+.whatsapp-float i {
+  line-height: 60px;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
+.posters {
+  padding: 3rem 1rem;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.posters h2 {
+  font-family: 'Poppins', sans-serif;
+  color: #004466;
+  margin-bottom: 2rem;
+}
+
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+.poster-display img {
+  width: auto;          /* don’t force full width */
+  max-width: 450px;     /* 👈 limit poster width */
+  height: auto;         /* keep proportions */
+  object-fit: contain;  /* show full design */
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+
+.poster-display img:hover {
+  transform: scale(1.05);
+}
+
+
+/* Tablet */
+@media (max-width: 768px) {
+  .poster-display img { height: 200px; }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .poster-display img { height: 150px; }
+  .poster-grid { grid-template-columns: 1fr; }
+}
+
+.gallery-note {
+  font-size: 14px;
+  color: #333;
+  margin-top: 1.5rem;
+  font-style: italic;
+  background: #eee;
+  padding: 8px 12px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+
+.testimonials h2 {
+  font-family: 'Poppins', sans-serif;
+  color: #004466;
+  margin-bottom: 2rem;
+}
+/* Testimonials Section Title */
+.testimonials h2 {
+  text-align: center;   /* center the title */
+  font-size: 2rem;      /* adjust size for emphasis */
+  margin-bottom: 20px;
+  color: #ff6600;       /* match your brand orange */
+}
+
+.testimonial-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.testimonial {
+  flex: 1 1 300px;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-style: italic;
+  transition: transform 0.3s;
+}
+.testimonial:hover {
+  transform: translateY(-5px);
+}
+.testimonial h4 {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Form Styling */
+.testimonial-form {
+  margin-top: 2rem;
+  text-align: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.testimonial-form h3 {
+  margin-bottom: 1rem;
+  color: #004466;
+}
+.testimonial-form input,
+.testimonial-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.testimonial-form button {
+  background: #004466;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.testimonial-form button:hover {
+  background: #006699;
+}
+.stars {
+  margin-top: 0.5rem;
+  color: #FFD700; /* gold color for stars */
+  font-size: 18px;
+}
+.testimonial-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+/* Impact Counters Section */
+.impact {
+  padding: 60px 20px;
+  background: #f9f9f9; /* light background for contrast */
+  text-align: center;
+}
+
+.impact {
+      padding: 3rem 1rem;
+      background: #004466;
+      color: #fff;
+      text-align: center;
+    }
+    .impact h2 {
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 2rem;
+    }
+    .counters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+    }
+    .counter {
+      flex: 1 1 200px;
+      background: #006699;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .counter .count {
+      font-size: 2.5rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #FFD700;
+    }
+    .counter p {
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+.logo img {
+  width: 100%;
+  max-width: 180px;       /* limits size on large screens */
+  height: auto;
+  display: block;
+  margin: 0 auto;
+
+  /* Prevent distortion */
+  object-fit: contain;
+
+  /* Glow effect for visibility */
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+}
+
+
+
+  /* Visibility enhancements */
+  filter: drop-shadow(0 0 16px rgba(255, 102, 0, 0.8));
+  min-height: 40px;
+  min-width: 120px;
+}
+
+/* Larger logo on desktop */
+@media (min-width: 1024px) {
+  .logo img {
+    max-height: 120px;
+  }
+}
+
+/* Medium size on tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .logo img {
+    max-height: 90px;
+  }
+}
+
+/* Smaller size on mobile */
+@media (max-width: 767px) {
+  .logo img {
+    max-height: 60px;
+  }
+}
+
+
