@@ -3,44 +3,32 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://kinaraservices.onrender.com/</loc>
+    <loc>https://kinara-services-site.onrender.com/</loc>
     <priority>1.0</priority>
   </url>
 
-  <!-- Services -->
+  <!-- Apply Page -->
   <url>
-    <loc>https://kinaraservices.onrender.com/services</loc>
+    <loc>https://kinara-services-site.onrender.com/apply.php</loc>
     <priority>0.9</priority>
   </url>
 
-  <!-- Knowledge Hub -->
+  <!-- Thank You Page -->
   <url>
-    <loc>https://kinaraservices.onrender.com/knowledge</loc>
-    <priority>0.9</priority>
+    <loc>https://kinara-services-site.onrender.com/thankyou.php</loc>
+    <priority>0.8</priority>
   </url>
 
-  <!-- Testimonials -->
+  <!-- Gallery -->
   <url>
-    <loc>https://kinaraservices.onrender.com/testimonials</loc>
+    <loc>https://kinara-services-site.onrender.com/gallery.php</loc>
     <priority>0.7</priority>
   </url>
 
-  <!-- About Us -->
+  <!-- Robots.txt -->
   <url>
-    <loc>https://kinaraservices.onrender.com/about</loc>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Contact -->
-  <url>
-    <loc>https://kinaraservices.onrender.com/contact</loc>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Posters Gallery -->
-  <url>
-    <loc>https://kinaraservices.onrender.com/gallery</loc>
-    <priority>0.6</priority>
+    <loc>https://kinara-services-site.onrender.com/robots.txt</loc>
+    <priority>0.5</priority>
   </url>
 
 </urlset>
