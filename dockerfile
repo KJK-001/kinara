@@ -3,6 +3,13 @@ FROM php:8.2-apache
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
+# Install required system packages for Composer and PHPMailer
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    zip \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy project files into Apache web root
 COPY ./ /var/www/html/
 
