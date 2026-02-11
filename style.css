@@ -34,29 +34,20 @@ body {
   font-weight: 600; font-family: 'Poppins', sans-serif;
 }
 
-/* Welcome Section Styling */
-.welcome {
-  padding: 40px;
-  text-align: center;
-  overflow: hidden;   /* hides text when off-screen */
-  position: relative;
-}
-
-/* Sliding Welcome Text */
+/* Default (desktop) */
 .welcome-text {
-  font-size: 3rem;                 /* larger for visibility */
-  font-weight: bold;
-  color: #ff6600;                  /* brand orange */
-  display: inline-block;
+  font-size: 3rem;
   white-space: nowrap;
-
-  /* Continuous sliding animation */
-  animation: slideAcross 12s linear infinite;
-
-  /* Cleaner glow effect (less heavy shadow) */
-  text-shadow: 0 0 12px rgba(255, 102, 0, 0.9),
-              
 }
+
+/* Mobile screens */
+@media (max-width: 600px) {
+  .welcome-text {
+    font-size: 1.5rem;   /* smaller size for phones */
+    white-space: normal; /* allow wrapping */
+  }
+}
+
 
 /* Keyframes for continuous sliding */
 @keyframes slideAcross {
