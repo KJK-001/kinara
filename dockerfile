@@ -3,11 +3,12 @@ FROM php:8.2-apache
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Install required tools and PHP extensions in one efficient step
+# Install required tools and libraries for Composer and PHPMailer
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
     zip \
+    libzip-dev \
  && docker-php-ext-install zip \
  && rm -rf /var/lib/apt/lists/*
 
