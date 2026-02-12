@@ -16,18 +16,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail = new PHPMailer(true);
 
     try {
-        // Server settings
+        // Server settings (read from Render environment variables)
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
+        $mail->Host       = getenv('SMTP_HOST');
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'kinaraittechnician@gmail.com';   // your Gmail
-        $mail->Password   = 'vlbd ycqo wudd viir';            // Gmail App Password
-        $mail->SMTPSecure = 'tls';
-        $mail->Port       = 587;
+        $mail->Username   = getenv('SMTP_USER');
+        $mail->Password   = getenv('SMTP_PASS');
+        $mail->SMTPSecure = 'tls'; // try 'ssl' if TLS fails
+        $mail->Port       = getenv('SMTP_PORT');
+
+        // Debugging (logs will appear in Render Logs)
+        $mail->SMTPDebug  = 2;
+        $mail->Debugoutput = 'error_log';
 
         // Recipients (to you)
-        $mail->setFrom('kinaraittechnician@gmail.com', 'Kinara Services');
-        $mail->addAddress('kinaraittechnician@gmail.com'); // send to yourself
+        $mail->setFrom(getenv('SMTP_USER'), 'Kinara Services');
+        $mail->addAddress(getenv('SMTP_USER')); // send to yourself
 
         // Content (to you)
         $mail->isHTML(true);
@@ -45,14 +49,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Confirmation email to applicant
         $confirm = new PHPMailer(true);
         $confirm->isSMTP();
-        $confirm->Host       = 'smtp.gmail.com';
+        $confirm->Host       = getenv('SMTP_HOST');
         $confirm->SMTPAuth   = true;
-        $confirm->Username   = 'kinaraittechnician@gmail.com';
-        $confirm->Password   = 'vlbd ycqo wudd viir';
+        $confirm->Username   = getenv('SMTP_USER');
+        $confirm->Password   = getenv('SMTP_PASS');
         $confirm->SMTPSecure = 'tls';
-        $confirm->Port       = 587;
+        $confirm->Port       = getenv('SMTP_PORT');
 
-        $confirm->setFrom('kinaraittechnician@gmail.com', 'Kinara Services');
+        $confirm->SMTPDebug  = 2;
+        $confirm->Debugoutput = 'error_log';
+
+        $confirm->setFrom(getenv('SMTP_USER'), 'Kinara Services');
         $confirm->addAddress($email, $name);
 
         $confirm->isHTML(true);
