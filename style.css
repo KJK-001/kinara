@@ -134,6 +134,7 @@ footer i { margin-right: 8px; color: #ffcc00; }
   opacity: 0;
   transform: translateY(20px);
   animation: fadeSlideIn 1.5s forwards;
+  text-align:center;
 }
 
 .welcome h2 {

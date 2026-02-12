@@ -50,9 +50,9 @@
 <body>
     <div class="container">
         <h1>Thank You!</h1>
-        <p>Your application has been submitted successfully.</p>
-        <p>We’ve also sent a confirmation email to your inbox.</p>
-        <p>Our team will review your request and get back to you shortly.</p>
+        <p>Your application has been submitted successfully via WhatsApp.</p>
+        <p>We’ve received your details and our team will review your request shortly.</p>
+        <p>You’ll hear back from us soon with the next steps.</p>
         <a href="index.html" class="btn">Return to Homepage</a>
     </div>
     <footer>
