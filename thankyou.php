@@ -40,6 +40,20 @@
         .btn:hover {
             background: #fbc02d;
         }
+        .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #25D366; /* WhatsApp green */
+            color: #fff;
+        }
+        .wa-btn:hover {
+            background: #128C7E;
+        }
+        .wa-icon {
+            width: 20px;
+            height: 20px;
+        }
         footer {
             margin-top: 30px;
             font-size: 0.9em;
@@ -51,8 +65,33 @@
     <div class="container">
         <h1>Thank You!</h1>
         <p>Your application has been submitted successfully via WhatsApp.</p>
-        <p>We’ve received your details and our team will review your request shortly.</p>
-        <p>You’ll hear back from us soon with the next steps.</p>
+        <p>Our team has received your details and will review your request shortly.</p>
+
+        <?php
+        // Build fallback WhatsApp link using query parameters
+        $name    = $_GET['name'] ?? '';
+        $email   = $_GET['email'] ?? '';
+        $service = $_GET['service'] ?? '';
+        $message = $_GET['message'] ?? '';
+
+        $whatsappMessage = "New Application:\n"
+            . "Name: $name\n"
+            . "Email: $email\n"
+            . "Service: $service\n"
+            . "Message: $message";
+
+        $whatsappNumber = "254748956783";
+        $waUrl = "https://wa.me/$whatsappNumber?text=" . urlencode($whatsappMessage);
+        ?>
+
+        <!-- Fallback WhatsApp link with icon -->
+        <p>If WhatsApp didn’t open automatically, click below to send your application:</p>
+        <a href="<?php echo $waUrl; ?>" class="btn wa-btn" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="wa-icon">
+            Send via WhatsApp
+        </a>
+
+        <br><br>
         <a href="index.html" class="btn">Return to Homepage</a>
     </div>
     <footer>
