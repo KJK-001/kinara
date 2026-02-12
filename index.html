@@ -127,12 +127,13 @@
     </div>
   </section>
 
-  <!-- Apply Form -->
-<section id="apply" class="apply">
-  <h2>Apply for a Service</h2>
   <form action="apply.php" method="POST">
     <input type="text" name="name" placeholder="Your Name" required>
-    <input type="email" name="email" placeholder="Your Email" required>
+    <input type="tel" name="phone" placeholder="Your Phone Number" required>
+    <input type="text" name="service" placeholder="Service" required>
+    <textarea name="message" placeholder="Message"></textarea>
+    <button type="submit">Apply</button>
+</form>
 
     <select name="service" required>
       <option value="">Select a Service</option>

@@ -1,14 +1,14 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name    = $_POST['name'] ?? '';
-    $email   = $_POST['email'] ?? '';
+    $phone   = $_POST['phone'] ?? '';
     $service = $_POST['service'] ?? '';
     $message = $_POST['message'] ?? '';
 
     // Build WhatsApp message
     $whatsappMessage = "New Application:\n"
         . "Name: $name\n"
-        . "Email: $email\n"
+        . "Phone: $phone\n"
         . "Service: $service\n"
         . "Message: $message";
 
@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Pass data to thankyou.php via query string
     $redirectUrl = "thankyou.php?name=" . urlencode($name) .
-                   "&email=" . urlencode($email) .
+                   "&phone=" . urlencode($phone) .
                    "&service=" . urlencode($service) .
                    "&message=" . urlencode($message);
 
