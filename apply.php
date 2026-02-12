@@ -27,8 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mail->SMTPAuth   = true;
         $mail->Username   = getenv('SMTP_USER');
         $mail->Password   = getenv('SMTP_PASS');
-        $mail->SMTPSecure = 'tls'; // try 'ssl' if TLS fails
-        $mail->Port       = getenv('SMTP_PORT');
+        $mail->SMTPSecure = 'ssl';   // force SSL
+        $mail->Port       = 465;     // SSL port
 
         // Debugging (logs will appear in Render Logs)
         $mail->SMTPDebug  = 2;
@@ -57,8 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $confirm->SMTPAuth   = true;
             $confirm->Username   = getenv('SMTP_USER');
             $confirm->Password   = getenv('SMTP_PASS');
-            $confirm->SMTPSecure = 'tls';
-            $confirm->Port       = getenv('SMTP_PORT');
+            $confirm->SMTPSecure = 'ssl';
+            $confirm->Port       = 465;
 
             $confirm->SMTPDebug  = 2;
             $confirm->Debugoutput = 'error_log';
