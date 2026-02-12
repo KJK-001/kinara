@@ -127,17 +127,7 @@
     </div>
   </section>
 
-  <form action="apply.php" method="POST">
-    <input type="text" name="name" placeholder="Your Name" required>
-    <input type="tel" name="phone" placeholder="07XXXXXXXX or 01XXXXXXXX" 
-           pattern="^(07\d{8}|01\d{8})$" 
-           title="Phone number must start with 07 or 01 and be 10 digits long" 
-           required>
-    <input type="text" name="service" placeholder="Service" required>
-    <textarea name="message" placeholder="Message"></textarea>
-    <button type="submit">Apply</button>
-</form>
-
+  <div class="form-container"> <form action="apply.php" method="POST"> <h2>Apply for Service</h2> <input type="text" name="name" placeholder="Your Name" required> <input type="tel" name="phone" placeholder="07XXXXXXXX or 01XXXXXXXX" pattern="^(07\d{8}|01\d{8})$" title="Phone number must start with 07 or 01 and be 10 digits long" required>
 
     <select name="service" required>
       <option value="">Select a Service</option>

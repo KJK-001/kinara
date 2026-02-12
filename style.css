@@ -75,23 +75,54 @@ body {
 .card h3 { font-family: 'Poppins', sans-serif; color: #006699; }
 
 /* Application Form */
-.apply h2 { text-align: center; font-family: 'Poppins', sans-serif; color: #004466; }
-.apply form {
-  display: flex; flex-direction: column;
-  max-width: 500px; margin: auto; padding: 2rem;
+.apply {
+  display: flex;
+  flex-direction: column;
+  align-items: center;        /* center horizontally */
+  justify-content: center;    /* center vertically */
+  min-height: 100vh;          /* full screen height */
 }
+
+.apply h2 {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  color: #004466;
+}
+
+.apply form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+  padding: 2rem;
+  background: #ff9800;        /* orange background */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
 .apply input, .apply select, .apply textarea {
-  margin: 0.5rem 0; padding: 0.8rem;
-  border: 1px solid #ccc; border-radius: 5px;
+  margin: 0.5rem 0;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-family: 'Roboto', sans-serif;
 }
+
 .apply button {
-  background: #ff6600; color: #fff;
-  padding: 0.7rem; border: none;
-  border-radius: 5px; font-weight: 600;
-  cursor: pointer; font-family: 'Poppins', sans-serif;
+  background: #ff6600;
+  color: #fff;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
 }
-.apply button:hover { background: #e65c00; }
+
+.apply button:hover {
+  background: #e65c00;
+}
 
 /* Contact */
 footer {
