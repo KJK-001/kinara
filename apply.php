@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $whatsappNumber = "254748956783";
     $waUrl = "https://wa.me/$whatsappNumber?text=" . urlencode($whatsappMessage);
 
-    // Redirect to an intermediate page that opens WhatsApp, then thankyou.php
+    // Open WhatsApp in a new tab and immediately show thankyou.php
     echo "<!DOCTYPE html>
     <html>
     <head>
@@ -24,14 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <script>
             // Open WhatsApp in a new tab
             window.open('$waUrl', '_blank');
-            // After 2 seconds, redirect back to thankyou.php
-            setTimeout(function() {
-                window.location.href = 'thankyou.php';
-            }, 2000);
+            // Immediately redirect current tab to thankyou.php
+            window.location.href = 'thankyou.php';
         </script>
     </head>
     <body>
-        <p>Redirecting you to WhatsApp... Please wait.</p>
+        <p>Redirecting you to WhatsApp and showing confirmation...</p>
     </body>
     </html>";
 }
