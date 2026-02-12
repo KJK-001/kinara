@@ -1,4 +1,9 @@
 <?php
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // Include PHPMailer classes
 require __DIR__ . '/PHPMailer/src/Exception.php';
 require __DIR__ . '/PHPMailer/src/PHPMailer.php';
@@ -8,15 +13,15 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name    = $_POST['name'];
-    $email   = $_POST['email'];
-    $service = $_POST['service'];
-    $message = $_POST['message'];
+    $name    = $_POST['name'] ?? '';
+    $email   = $_POST['email'] ?? '';
+    $service = $_POST['service'] ?? '';
+    $message = $_POST['message'] ?? '';
 
     $mail = new PHPMailer(true);
 
     try {
-        // Server settings (read from Render environment variables)
+        // Server settings (from Render environment variables)
         $mail->isSMTP();
         $mail->Host       = getenv('SMTP_HOST');
         $mail->SMTPAuth   = true;
@@ -31,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Recipients (to you)
         $mail->setFrom(getenv('SMTP_USER'), 'Kinara Services');
-        $mail->addAddress(getenv('SMTP_USER')); // send to yourself
+        $mail->addAddress(getenv('SMTP_USER'));
 
         // Content (to you)
         $mail->isHTML(true);
@@ -44,40 +49,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p><strong>Message:</strong> $message</p>
         ";
 
-        $mail->send();
+        if ($mail->send()) {
+            // Confirmation email to applicant
+            $confirm = new PHPMailer(true);
+            $confirm->isSMTP();
+            $confirm->Host       = getenv('SMTP_HOST');
+            $confirm->SMTPAuth   = true;
+            $confirm->Username   = getenv('SMTP_USER');
+            $confirm->Password   = getenv('SMTP_PASS');
+            $confirm->SMTPSecure = 'tls';
+            $confirm->Port       = getenv('SMTP_PORT');
 
-        // Confirmation email to applicant
-        $confirm = new PHPMailer(true);
-        $confirm->isSMTP();
-        $confirm->Host       = getenv('SMTP_HOST');
-        $confirm->SMTPAuth   = true;
-        $confirm->Username   = getenv('SMTP_USER');
-        $confirm->Password   = getenv('SMTP_PASS');
-        $confirm->SMTPSecure = 'tls';
-        $confirm->Port       = getenv('SMTP_PORT');
+            $confirm->SMTPDebug  = 2;
+            $confirm->Debugoutput = 'error_log';
 
-        $confirm->SMTPDebug  = 2;
-        $confirm->Debugoutput = 'error_log';
+            $confirm->setFrom(getenv('SMTP_USER'), 'Kinara Services');
+            $confirm->addAddress($email, $name);
 
-        $confirm->setFrom(getenv('SMTP_USER'), 'Kinara Services');
-        $confirm->addAddress($email, $name);
+            $confirm->isHTML(true);
+            $confirm->Subject = 'We Received Your Application';
+            $confirm->Body    = "
+                <h3>Thank you, $name!</h3>
+                <p>Your application for <strong>$service</strong> has been received successfully.</p>
+                <p>We will review your request and get back to you shortly.</p>
+                <p>Best regards,<br>Kinara Services Team</p>
+            ";
 
-        $confirm->isHTML(true);
-        $confirm->Subject = 'We Received Your Application';
-        $confirm->Body    = "
-            <h3>Thank you, $name!</h3>
-            <p>Your application for <strong>$service</strong> has been received successfully.</p>
-            <p>We will review your request and get back to you shortly.</p>
-            <p>Best regards,<br>Kinara Services Team</p>
-        ";
+            $confirm->send();
 
-        $confirm->send();
-
-        // Redirect to thank you page
-        header("Location: thankyou.php");
-        exit();
+            // Redirect only if thankyou.php exists
+            if (file_exists(__DIR__ . '/thankyou.php')) {
+                header("Location: thankyou.php");
+                exit();
+            } else {
+                echo "Application submitted successfully, but thankyou.php not found.";
+            }
+        } else {
+            echo "Mailer failed: " . $mail->ErrorInfo;
+        }
     } catch (Exception $e) {
-        echo "There was an error sending your application. Mailer Error: {$mail->ErrorInfo}";
+        echo "There was an error sending your application. Exception: {$e->getMessage()}";
     }
 }
 ?>
