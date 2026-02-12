@@ -122,7 +122,17 @@ body {
 
 .apply button:hover {
   background: #e65c00;
+} 
+/* Space between sections */
+.apply {
+  margin-bottom: 3rem;   /* adds space below the form section */
 }
+
+.faq {
+  margin-top: 3rem;      /* adds space above the FAQ section */
+}
+
+
 
 /* Contact */
 footer {
