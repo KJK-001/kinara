@@ -53,7 +53,6 @@
     <h2>Empowering Institutions, Businesses & Individuals with Ethical Digital Solutions</h2>
     <p>Government Services • Documentation • Branding • ICT Solutions</p>
     <a href="#apply" class="btn">Apply for a Service</a>
-    <a href="#apply" class="btn">Apply for a Service</a>
 
   </section>
 
@@ -433,7 +432,27 @@
         animateCounters(); // fallback
       }
     });
-    document.getElementById("applyForm").addEventListener("submit", function(e) { e.preventDefault(); const name = this.name.value; const phone = this.phone.value; const service = this.service.value; const message = this.message.value; // WhatsApp message const text = `Welcome to Kinara Services — submit your application%0A Name: ${name}%0A Phone: ${phone}%0A Service: ${service}%0A Message: ${message}`; // Your WhatsApp number in international format (Kenya = 254) const whatsappNumber = "254748956783"; // Redirect to WhatsApp window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank"); });
+
+    <!-- WhatsApp Redirect Script -->
+document.getElementById("applyForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = this.name.value;
+    const phone = this.phone.value;
+    const service = this.service.value;
+    const message = this.message.value;
+
+    const text = `Welcome to Kinara Services — submit your application%0A
+Name: ${name}%0A
+Phone: ${phone}%0A
+Service: ${service}%0A
+Message: ${message}`;
+
+    const whatsappNumber = "254748956783"; // your number in international format
+
+    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank");
+});
+
   </script>
 
   <!-- Floating WhatsApp Button -->
