@@ -50,9 +50,11 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <h2>Empowering Institutions & Individuals with Ethical Digital Solutions</h2>
+    <h2>Empowering Institutions, Businesses & Individuals with Ethical Digital Solutions</h2>
     <p>Government Services • Documentation • Branding • ICT Solutions</p>
     <a href="#apply" class="btn">Apply for a Service</a>
+    <a href="#apply" class="btn">Apply for a Service</a>
+
   </section>
 
  <section id="welcome" class="welcome">
@@ -127,36 +129,7 @@
     </div>
   </section>
 
-  <div class="form-container"> <form action="apply.php" method="POST"> <h2>Apply for Service</h2> <input type="text" name="name" placeholder="Your Name" required> <input type="tel" name="phone" placeholder="07XXXXXXXX or 01XXXXXXXX" pattern="^(07\d{8}|01\d{8})$" title="Phone number must start with 07 or 01 and be 10 digits long" required>
-
-    <select name="service" required>
-      <option value="">Select a Service</option>
-
-      <!-- Government & ICT -->
-      <option value="HELB Applications">HELB Applications</option>
-      <option value="KRA Services">KRA Services</option>
-      <option value="eCitizen Services">eCitizen Services</option>
-      <option value="KUCCPS Applications">KUCCPS Applications</option>
-      <option value="SHA Registration">SHA Registration</option>
-      <option value="TSC Applications">TSC Applications</option>
-      <option value="Driving Licence">Driving Licence</option>
-
-      <!-- Documentation & Career -->
-      <option value="Attachments Reports">Attachments Reports</option>
-      <option value="CV & Cover Letter Writing">CV & Cover Letter Writing</option>
-      <option value="Project Proposals">Project Proposals</option>
-      <option value="Business Plans">Business Plans</option>
-      <option value="Business Registration">Business Registration</option>
-
-      <!-- Creative & Branding -->
-      <option value="Graphic Design">Graphic Design (Posters, Flyers, Banners)</option>
-      <option value="Event Cards Design">Event Cards Design</option>
-    </select>
-
-    <textarea name="message" placeholder="Tell us more..." required></textarea>
-    <button type="submit" class="btn">Submit Application</button>
-  </form>
-</section>
+  <!-- Apply Section --> <section id="apply" class="apply"> <h2>Apply for Service</h2> <form id="applyForm"> <input type="text" name="name" placeholder="Your Name" required> <input type="tel" name="phone" placeholder="07XXXXXXXX or 01XXXXXXXX" pattern="^(07\d{8}|01\d{8})$" title="Phone number must start with 07 or 01 and be 10 digits long" required> <!-- Unified Service Dropdown --> <select name="service" required> <option value="" disabled selected>Select a Service</option> <!-- Government & ICT --> <option value="HELB Applications">HELB Applications</option> <option value="KRA Services">KRA Services</option> <option value="eCitizen Services">eCitizen Services</option> <option value="KUCCPS Applications">KUCCPS Applications</option> <option value="SHA Registration">SHA Registration</option> <option value="TSC Applications">TSC Applications</option> <option value="Driving Licence">Driving Licence</option> <!-- Documentation & Career --> <option value="Attachments Reports">Attachments Reports</option> <option value="CV & Cover Letter Writing">CV & Cover Letter Writing</option> <option value="Project Proposals">Project Proposals</option> <option value="Business Plans">Business Plans</option> <option value="Business Registration">Business Registration</option> <!-- Creative & Branding --> <option value="Graphic Design">Graphic Design (Posters, Flyers, Banners)</option> <option value="Event Cards Design">Event Cards Design</option> </select> <textarea name="message" placeholder="Tell us more..." required></textarea> <button type="submit" class="btn">Submit Application</button> </form> </section>
 
   <!-- FAQs Section -->
 <section id="faqs" class="faqs">
@@ -460,6 +433,7 @@
         animateCounters(); // fallback
       }
     });
+    document.getElementById("applyForm").addEventListener("submit", function(e) { e.preventDefault(); const name = this.name.value; const phone = this.phone.value; const service = this.service.value; const message = this.message.value; // WhatsApp message const text = `Welcome to Kinara Services — submit your application%0A Name: ${name}%0A Phone: ${phone}%0A Service: ${service}%0A Message: ${message}`; // Your WhatsApp number in international format (Kenya = 254) const whatsappNumber = "254748956783"; // Redirect to WhatsApp window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank"); });
   </script>
 
   <!-- Floating WhatsApp Button -->

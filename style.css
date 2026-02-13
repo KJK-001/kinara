@@ -74,34 +74,38 @@ body {
 }
 .card h3 { font-family: 'Poppins', sans-serif; color: #006699; }
 
-/* Application Form */
+/* Apply Service Section */
 .apply {
-  display: flex;
-  flex-direction: column;
-  align-items: center;        /* center horizontally */
-  justify-content: center;    /* center vertically */
-  min-height: 100vh;          /* full screen height */
+  padding: 3rem 1rem;
+  background: #ff9800;       /* orange background */
+  text-align: center;
+  margin-bottom: 3rem;       /* spacing before FAQ */
 }
 
 .apply h2 {
-  text-align: center;
   font-family: 'Poppins', sans-serif;
-  color: #004466;
+  color: #fff;               /* white heading for contrast */
+  margin-bottom: 1rem;
 }
 
+.apply p {
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+/* Form box inside Apply section */
 .apply form {
-  display: flex;
-  flex-direction: column;
   max-width: 500px;
-  width: 100%;
-  margin: auto;
+  margin: 0 auto;
+  text-align: left;
+  background: #fff;          /* white form box for readability */
   padding: 2rem;
-  background: #ff9800;        /* orange background */
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .apply input, .apply select, .apply textarea {
+  width: 100%;
   margin: 0.5rem 0;
   padding: 0.8rem;
   border: 1px solid #ccc;
@@ -110,7 +114,7 @@ body {
 }
 
 .apply button {
-  background: #ff6600;
+  background: #ff6600;       /* darker orange button */
   color: #fff;
   padding: 0.7rem;
   border: none;
@@ -121,17 +125,11 @@ body {
 }
 
 .apply button:hover {
-  background: #e65c00;
-} 
-/* Space between sections */
-.apply {
-  margin-bottom: 3rem;   /* adds space below the form section */
+  background: #e65c00;       /* hover effect */
 }
-
-.faq {
-  margin-top: 3rem;      /* adds space above the FAQ section */
+html {
+  scroll-behavior: smooth;
 }
-
 
 
 /* Contact */
